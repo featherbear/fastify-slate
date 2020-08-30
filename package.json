@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Slate documentation generator for Fastify routes",
   "main": "fastify-slate.js",
+  "bin": {
+    "fastify-slate": "./fastify-slate.js"
+  },
   "scripts": {
     "start": "node ."
   },

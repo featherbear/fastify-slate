@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // https://github.com/fastify/fastify-swagger/blob/master/dynamic.js
 
 const outputFile = process.argv[2]
