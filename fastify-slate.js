@@ -18,7 +18,7 @@ routeFiles.forEach(path => {
   try {
     routes.push(require(path))
   } catch (e) {
-    console.error(`Could not load path from [${path}]: ${e.code}`)
+    console.error(`Could not load path from [${path}]: ${e}`)
   }
 })
 
