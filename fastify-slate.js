@@ -12,13 +12,14 @@ if (!outputFile || routeFiles.length === 0) {
 
 require = require('esm')(module)
 
+const path = require('path')
 const fs = require('fs')
 const routes = []
-routeFiles.forEach(path => {
+routeFiles.forEach(p => {
   try {
-    routes.push(require(path))
+    routes.push(require(path.join(process.cwd(), p)))
   } catch (e) {
-    console.error(`Could not load path from [${path}]: ${e}`)
+    console.error(`Could not load path from [${p}]: ${e}`)
   }
 })
 
@@ -45,7 +46,7 @@ routes.forEach(fastify.register)
 fastify.listen(0, () =>
   fastify.close(() => {
     console.log('doing the thing')
-    fs.writeFile(outputFile, '# test!')
+    fs.writeFileSync(outputFile, '# test!')
     process.exit(0)
   })
 )
