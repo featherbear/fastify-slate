@@ -1,0 +1,23 @@
+{
+  "name": "fastify-slate",
+  "version": "1.0.0",
+  "description": "Slate documentation generator for Fastify routes",
+  "main": "fastify-slate.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/featherbear/fastify-slate.git"
+  },
+  "author": "featherbear",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/featherbear/fastify-slate/issues"
+  },
+  "homepage": "https://github.com/featherbear/fastify-slate#readme",
+  "dependencies": {
+    "esm": "^3.2.25",
+    "fastify": "^3.3.0"
+  }
+}
