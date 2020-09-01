@@ -14,39 +14,54 @@ require = require('esm')(module)
 
 const path = require('path')
 const fs = require('fs')
-const routes = []
+const routeModules = []
 routeFiles.forEach(p => {
   try {
-    routes.push(require(path.join(process.cwd(), p)))
+    routeModules.push(require(path.join(process.cwd(), p)))
   } catch (e) {
     console.error(`Could not load path from [${p}]: ${e}`)
   }
 })
 
-if (routes.length === 0) {
+if (routeModules.length === 0) {
   console.log('No routes files were valid')
   process.exit(1)
 }
 
 const fastify = require('fastify')()
 
+const routes = {}
+
 fastify.addHook('onRoute', function (route) {
   if (route.schema && route.schema.hide) return
+  if (route.url in routes) {
+    console.warn(`Route [${route.url}] was declared more than once`)
+  }
+  const routeData = {}
+  const methods = typeof route.method === 'string' ? [route.method] : route.method
+  methods.forEach(method => (routeData[method] = route.schema))
+  routes[route.url
+    .replace(/\/+/g, '/')
+    .replace(/(.)\/$/, '$1')
+  ] = routeData
 
-  const methods =
-    typeof route.method === 'string' ? [route.method] : route.method
-  console.log(route.url, methods)
+  // console.log(route.url, methods, route)
 })
-// fastify.addHook('onRegister', async (instance) => {
-//   console.log(instance)
-// })
 
-routes.forEach(fastify.register)
+// fastify.addHook('onRegister', async (instance) => {})
+
+routeModules.forEach(fastify.register)
+
+const { default: PathTree } = require('./tree')
+const tree = new PathTree()
 
 fastify.listen(0, () =>
   fastify.close(() => {
     console.log('doing the thing')
-    fs.writeFileSync(outputFile, '# test!')
+
+    Object.entries(routes).forEach(pair => tree.register(...pair))
+
+    fs.writeFileSync(outputFile, tree.render())
     process.exit(0)
   })
 )
