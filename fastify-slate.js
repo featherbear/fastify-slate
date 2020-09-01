@@ -61,7 +61,9 @@ fastify.listen(0, () =>
 
     Object.entries(routes).forEach(pair => tree.register(...pair))
 
-    fs.writeFileSync(outputFile, tree.render())
+    const content = tree.render()
+    console.info(content)
+    fs.writeFileSync(outputFile, content)
     process.exit(0)
   })
 )
