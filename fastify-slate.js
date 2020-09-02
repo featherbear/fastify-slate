@@ -33,7 +33,7 @@ const fastify = require('fastify')()
 const routes = {}
 
 fastify.addHook('onRoute', function (route) {
-  if (route.schema && route.schema.hide) return
+  if ((route.schema && route.schema.hide) || route.hide) return
   if (route.url in routes) {
     console.warn(`Route [${route.url}] was declared more than once`)
   }
