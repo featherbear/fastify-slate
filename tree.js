@@ -29,12 +29,20 @@ class Tree {
 
     if (this[TreeSymbol][MethodSymbol]) {
       for (const method in this[TreeSymbol][MethodSymbol]) {
-        stringBuilder.push(`${method}: ${this.path || '/'}`)
+        stringBuilder.push(`\`${method}: ${this.path || '/'}\``)
+        if (
+          this[TreeSymbol][MethodSymbol][method] &&
+          this[TreeSymbol][MethodSymbol][method].description
+        ) {
+          stringBuilder.push(this[TreeSymbol][MethodSymbol][method].description)
+        }
       }
     }
 
     for (const [path, tree] of Object.entries(this[TreeSymbol])) {
-      stringBuilder.push(`${'#'.repeat(level)} ${path}\n\n${tree.render(level + 1)}`)
+      stringBuilder.push(
+        `${'#'.repeat(level)} ${path}\n\n${tree.render(level + 1)}`
+      )
     }
 
     return stringBuilder.join('\n\n')
