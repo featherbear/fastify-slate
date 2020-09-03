@@ -34,18 +34,13 @@ const routes = {}
 
 fastify.addHook('onRoute', function (route) {
   if ((route.schema && route.schema.hide) || route.hide) return
-  if (route.url in routes) {
-    console.warn(`Route [${route.url}] was declared more than once`)
-  }
+  const cleanedRoute = route.url
+    .replace(/\/+/g, '/')
+    .replace(/(.)\/$/, '$1')
   const routeData = {}
   const methods = typeof route.method === 'string' ? [route.method] : route.method
   methods.forEach(method => (routeData[method] = route.schema))
-  routes[route.url
-    .replace(/\/+/g, '/')
-    .replace(/(.)\/$/, '$1')
-  ] = routeData
-
-  // console.log(route.url, methods, route)
+  routes[cleanedRoute] = { ...(routes[cleanedRoute] || {}), ...routeData }
 })
 
 // fastify.addHook('onRegister', async (instance) => {})
