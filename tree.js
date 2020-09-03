@@ -35,6 +35,17 @@ class Tree {
           this[TreeSymbol][MethodSymbol][method].description
         ) {
           stringBuilder.push(this[TreeSymbol][MethodSymbol][method].description)
+
+          if (method === 'POST' || method === 'PUT') {
+            if (typeof this[TreeSymbol][MethodSymbol][method].body !== 'undefined') {
+              const tableBuilder = ['|Parameter|Type|Description|\n|:---:|:---:|:---|']
+              for (const [name, data] of Object.entries(this[TreeSymbol][MethodSymbol][method].body)) {
+                tableBuilder.push(`|\`${name}\`|${data.type || ''}|${data.description || ''}`)
+              }
+
+              stringBuilder.push(tableBuilder.join('\n'))
+            }
+          }
         }
       }
     }
