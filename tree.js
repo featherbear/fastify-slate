@@ -43,9 +43,9 @@ class Tree {
               if (body.type && body.properties) {
                 body = body.properties
               }
-              const tableBuilder = ['|Parameter|Type|Description|\n|:---:|:---:|:---|']
+              const tableBuilder = ['|Parameter|Type|Description|\n|:---|:---|:---|']
               for (const [name, data] of Object.entries(body)) {
-                tableBuilder.push(`|\`${name}\`|${data.type || ''}|${data.description || ''}`)
+                tableBuilder.push(`|**${name}**|\`${data.type || ''}\`|${data.description || ''}`)
               }
 
               stringBuilder.push(tableBuilder.join('\n'))
