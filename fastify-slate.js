@@ -57,7 +57,7 @@ const tree = new PathTree()
 
 fastify.listen(0, () =>
   fastify.close(() => {
-    console.log('doing the thing')
+    console.log('Doing the thing...')
 
     Object.entries(routes).forEach(pair => tree.register(...pair))
 
