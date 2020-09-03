@@ -40,9 +40,13 @@ class Tree {
     }
 
     for (const [path, tree] of Object.entries(this[TreeSymbol])) {
-      stringBuilder.push(
-        `${'#'.repeat(level)} ${path}\n\n${tree.render(level + 1)}`
-      )
+      let content = ''
+      if ((!path.startsWith(':')) || Object.keys(tree[TreeSymbol]).length) {
+        content += `${'#'.repeat(level)} ${path}\n\n`
+      }
+
+      content += `${tree.render(level + 1)}`
+      stringBuilder.push(content)
     }
 
     return stringBuilder.join('\n\n')
