@@ -39,7 +39,12 @@ fastify.addHook('onRoute', function (route) {
     .replace(/(.)\/$/, '$1')
   const routeData = {}
   const methods = typeof route.method === 'string' ? [route.method] : route.method
-  methods.forEach(method => (routeData[method] = route.schema))
+  methods.forEach(method => {
+    routeData[method] = route.schema
+    if (typeof route.preValidation !== 'undefined') {
+      routeData[method].preValidation = route.preValidation
+    }
+  })
   routes[cleanedRoute] = { ...(routes[cleanedRoute] || {}), ...routeData }
 })
 
