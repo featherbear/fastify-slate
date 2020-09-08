@@ -45,7 +45,7 @@ fastify.addHook('onRoute', function (route) {
 
 // fastify.addHook('onRegister', async (instance) => {})
 
-routeModules.forEach(fastify.register)
+routeModules.forEach(m => fastify.register(m))
 
 const { default: PathTree } = require('./tree')
 const tree = new PathTree()
