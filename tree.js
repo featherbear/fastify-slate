@@ -37,7 +37,7 @@ class Tree {
           stringBuilder.push(this[TreeSymbol][MethodSymbol][method].description)
 
           if (typeof this[TreeSymbol][MethodSymbol][method].preValidation !== 'undefined') {
-            const conditionBuilder = ['Requirements']
+            const conditionBuilder = ['**Requirements**\n']
             for (const validationFn of this[TreeSymbol][MethodSymbol][method].preValidation) {
               if (validationFn && validationFn.comment) {
                 conditionBuilder.push('- ' + validationFn.comment)
