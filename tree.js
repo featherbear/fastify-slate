@@ -29,7 +29,7 @@ class Tree {
 
     if (this[TreeSymbol][MethodSymbol]) {
       for (const method in this[TreeSymbol][MethodSymbol]) {
-        stringBuilder.push(`\`${method}: ${this.path || '/'}\``)
+        stringBuilder.push(`\`${method} ${this.path || '/'}\``)
         if (
           this[TreeSymbol][MethodSymbol][method] &&
           this[TreeSymbol][MethodSymbol][method].description
