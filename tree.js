@@ -46,20 +46,25 @@ class Tree {
             stringBuilder.push(conditionBuilder.join('\n'))
           }
 
-          if (method === 'POST' || method === 'PUT') {
-            let body = this[TreeSymbol][MethodSymbol][method].body
+          const tableBuilder = (targetSchema) => {
+            let schema = this[TreeSymbol][MethodSymbol][method][targetSchema]
 
-            if (typeof body !== 'undefined') {
-              if (body.type && body.properties) {
-                body = body.properties
+            if (typeof schema !== 'undefined') {
+              if (schema.type && schema.properties) {
+                schema = schema.properties
               }
               const tableBuilder = ['|Parameter|Type|Description|\n|:---|:---|:---|']
-              for (const [name, data] of Object.entries(body)) {
+              for (const [name, data] of Object.entries(schema)) {
                 tableBuilder.push(`|**${name}**|\`${data.type || ''}\`|${data.description || ''}`)
               }
 
               stringBuilder.push(tableBuilder.join('\n'))
             }
+          }
+
+          tableBuilder('params')
+          if (method === 'POST' || method === 'PUT') {
+            tableBuilder('body')
           }
         }
       }
