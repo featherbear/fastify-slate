@@ -63,7 +63,7 @@ class Tree {
           }
 
           tableBuilder('params')
-          if (method === 'POST' || method === 'PUT') {
+          if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method)) {
             tableBuilder('body')
           }
         }
