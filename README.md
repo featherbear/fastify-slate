@@ -7,7 +7,7 @@
 # Usage
 
 ```bash
-npx featherbear/fastify-slate <outputFile> <routeFile1> <routeFile2> <...>
+npx featherbear/fastify-slate <outputFile> <possiblySomeLibraryFile> <routeFile1> <...>
 ```
 
 Example: `npx featherbear/fastify-slate output.md ./route/auth.js ./route/login.js`
