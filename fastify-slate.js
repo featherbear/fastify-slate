@@ -12,6 +12,8 @@ if (!outputFile || routeFiles.length === 0) {
   process.exit(0)
 }
 
+require("sucrase/register");
+
 const path = require('path')
 const fs = require('fs')
 const routeModules = []

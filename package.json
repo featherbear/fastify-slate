@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Slate documentation generator for Fastify routes",
   "bin": {
-    "fastify-slate": "sucrase-node ./fastify-slate.js"
+    "fastify-slate": "./fastify-slate.js"
   },
   "scripts": {
     "start": "sucrase-node ."
