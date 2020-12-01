@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 if (!process.argv[2] || process.argv.slice(3).length === 0) {
   console.log(
     'Usage: fastify-slate <outputFile> <routeFile1> <routeFile2> <...>'
