@@ -7,7 +7,7 @@
     "fastify-slate": "./fastify-slate.js"
   },
   "scripts": {
-    "start": "node ."
+    "start": "sucrase-node ."
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/featherbear/fastify-slate#readme",
   "dependencies": {
-    "esm": "^3.2.25",
-    "fastify": "^3.3.0"
+    "fastify": "^3.3.0",
+    "sucrase": "^3.16.0"
   }
 }
