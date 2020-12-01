@@ -6,11 +6,11 @@ const outputFile = process.argv[2]
 const routeFiles = process.argv.slice(3)
 
 if (!outputFile || routeFiles.length === 0) {
-  console.log('Usage: fastify-slate <outputFile> <routeFile1> <routeFile2> <...>')
+  console.log(
+    'Usage: fastify-slate <outputFile> <routeFile1> <routeFile2> <...>'
+  )
   process.exit(0)
 }
-
-require = require('esm')(module)
 
 const path = require('path')
 const fs = require('fs')
@@ -29,41 +29,18 @@ if (routeModules.length === 0) {
 }
 
 const fastify = require('fastify')()
-
-const routes = {}
-
-fastify.addHook('onRoute', function (route) {
-  if ((route.schema && route.schema.hide) || route.hide) return
-  const cleanedRoute = route.url
-    .replace(/\/+/g, '/')
-    .replace(/(.)\/$/, '$1')
-  const routeData = {}
-  const methods = typeof route.method === 'string' ? [route.method] : route.method
-  methods.forEach(method => {
-    routeData[method] = route.schema
-    if (typeof route.preValidation !== 'undefined') {
-      routeData[method].preValidation = route.preValidation
-    }
-  })
-  routes[cleanedRoute] = { ...(routes[cleanedRoute] || {}), ...routeData }
+fastify.register(require('fastify-route-tree'), {
+  render: require('./renderFunction')
 })
-
-// fastify.addHook('onRegister', async (instance) => {})
 
 routeModules.forEach(m => fastify.register(m))
 
-const { default: PathTree } = require('./tree')
-const tree = new PathTree()
+fastify.ready(async () => {
+  console.log('Doing the thing...')
 
-fastify.listen(0, () =>
-  fastify.close(() => {
-    console.log('Doing the thing...')
+  const content = (await fastify.routeTree).render()
+  console.info(content)
 
-    Object.entries(routes).forEach(pair => tree.register(...pair))
-
-    const content = tree.render()
-    console.info(content)
-    fs.writeFileSync(outputFile, content)
-    process.exit(0)
-  })
-)
+  fs.writeFileSync(outputFile, content)
+  process.exit(0)
+})
